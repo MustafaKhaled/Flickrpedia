@@ -95,7 +95,10 @@
                     android:id="@+id/ageTextInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="false"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:cursorVisible="false"
+                    android:inputType="none"
                     tools:text="mustafa@example.com" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -108,7 +111,7 @@
                 android:layout_marginHorizontal="26dp"
                 android:textColor="@color/black"
                 android:text="@string/login_btn_text"
-                android:focusableInTouchMode="true"
+                android:focusable="true"
                 app:layout_constraintTop_toBottomOf="@+id/ageTextLayout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

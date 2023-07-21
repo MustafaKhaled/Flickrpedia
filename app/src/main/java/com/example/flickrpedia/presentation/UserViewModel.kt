@@ -18,11 +18,18 @@ class UserViewModel @Inject constructor() : ViewModel() {
     }
 
     fun validateEmail(email: String): Pair<Boolean, String?> {
-        return if (email.trim().isEmpty()) {
+        return if (email.trim().isEmpty())
             Pair(false, "Email is required")
-        } else if (Patterns.EMAIL_ADDRESS.matcher(email).matches().not())
+        else if (Patterns.EMAIL_ADDRESS.matcher(email).matches().not())
             Pair(false, "Invalid Email format")
         else
-            Pair(true,"")
+            Pair(true, "")
+    }
+
+    fun validateAge(age: String): Pair<Boolean, String> {
+        return if (age.trim().isEmpty()) {
+            Pair(false, "Age is required")
+        } else
+            Pair(true, "")
     }
 }
