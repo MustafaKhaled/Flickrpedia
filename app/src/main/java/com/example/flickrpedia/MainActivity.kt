@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.userViewModel = userViewModel
+        binding.lifecycleOwner = this
         setupListeners()
     }
 
@@ -42,14 +43,24 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener {
         }
         binding.userPrimaryBtn.setOnClickListener {
             requestFocus(it)
-            if (validateTextInput(binding.emailTextInput) &&
-                validateTextInput(binding.passwordTextInput) &&
-                validateTextInput(binding.ageTextInput)
+            if (validateForm(binding.emailTextInput) &&
+                validateForm(binding.passwordTextInput) &&
+                validateForm(binding.ageTextInput)
             ) {
                 Log.d("MainActivity", "setupListeners: Success")
             } else {
                 Log.d("MainActivity", "setupListeners: Failure")
             }
+        }
+        binding.switchUserType.setOnClickListener {
+            if (userViewModel.userType.value == UserViewModel.UserType.REGISTER)
+                userViewModel.changeUserType(UserViewModel.UserType.LOGIN)
+            else
+                userViewModel.changeUserType(UserViewModel.UserType.REGISTER)
+
+            resetError(binding.ageTextLayout)
+            resetError(binding.passwordTextLayout)
+            resetError(binding.emailTextLayout)
         }
     }
 
@@ -65,45 +76,44 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener {
     }
 
     override fun onFocusChange(view: View?, p1: Boolean) {
-        validateTextInput(view)
+        validateForm(view)
     }
 
-    private fun validateTextInput(view: View?): Boolean {
+    private fun validateForm(view: View?): Boolean {
         when (view?.id) {
             R.id.emailTextInput -> {
                 val (isValid, errorMessage) = userViewModel.validateEmail(binding.emailTextInput.text.toString())
-                if (view.isFocused.not() && isValid.not()) {
-                    showErrorTextLayout(errorMessage.toString(), binding.emailTextLayout)
-                    return false
-                } else {
-                    resetError(binding.emailTextLayout)
-                    return true
-                }
+                return  validateTextInput(view, binding.emailTextLayout, isValid, errorMessage)
             }
 
             R.id.passwordTextInput -> {
                 val (isValid, errorMessage) = userViewModel.validatePassword(binding.passwordTextInput.text.toString())
-                if (view.isFocused.not() && isValid.not()) {
-                    showErrorTextLayout(errorMessage.toString(), binding.passwordTextLayout)
-                    return false
-                } else {
-                    resetError(binding.passwordTextLayout)
-                    return true
-                }
+                return validateTextInput(view, binding.passwordTextLayout, isValid, errorMessage)
             }
 
             R.id.ageTextInput -> {
                 val (isValid, errorMessage) = userViewModel.validateAge(binding.ageTextInput.text.toString())
-                if (view.isFocused.not() && isValid.not()) {
-                    showErrorTextLayout(errorMessage, binding.ageTextLayout)
-                    return false
-                } else {
-                    resetError(binding.ageTextLayout)
-                    return true
-                }
+                return validateTextInput(view, binding.ageTextLayout, isValid, errorMessage)
             }
         }
         return false
+    }
+
+    private fun validateTextInput(
+        view: View,
+        textLayoutLayout: TextInputLayout,
+        isValid: Boolean,
+        errorMessage: String?
+    ): Boolean {
+        return if (view.isFocused.not() && isValid.not()) {
+            if (errorMessage != null) {
+                showErrorTextLayout(errorMessage, textLayoutLayout)
+            }
+            false
+        } else {
+            resetError(binding.ageTextLayout)
+            true
+        }
     }
 
     private fun requestFocus(it: View) {

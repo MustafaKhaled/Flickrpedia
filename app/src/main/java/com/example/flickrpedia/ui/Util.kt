@@ -1,7 +1,13 @@
 package com.example.flickrpedia.ui
 
+import android.view.View
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
+import com.example.flickrpedia.R
+import com.example.flickrpedia.presentation.UserViewModel
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputLayout
 import java.util.Calendar
 import java.util.TimeZone
 
@@ -30,4 +36,21 @@ fun getAge(time: Long): String {
     val currentYear = calendar.get(Calendar.YEAR)
     calendar.timeInMillis = time
     return currentYear.minus(calendar.get(Calendar.YEAR)).toString()
+}
+
+@BindingAdapter("android:setBottomText")
+fun TextView.setBottomText(userType: UserViewModel.UserType) {
+    if(userType == UserViewModel.UserType.LOGIN)
+        this.text = this.context.getString(R.string.dont_have_an_account)
+    else
+        this.text = this.context.getString(R.string.already_has_an_account)
+}
+
+@BindingAdapter("android:setVisibility")
+fun TextInputLayout.setVisibility(userType: UserViewModel.UserType) {
+    visibility = if (userType == UserViewModel.UserType.LOGIN) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
 }
