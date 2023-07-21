@@ -112,6 +112,7 @@
                 android:textColor="@color/black"
                 android:text="@string/login_btn_text"
                 android:focusable="true"
+                android:setText="@{userViewModel.userType}"
                 app:layout_constraintTop_toBottomOf="@+id/ageTextLayout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

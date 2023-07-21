@@ -2,6 +2,7 @@ package com.example.flickrpedia.ui
 
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
 import com.example.flickrpedia.R
 import com.example.flickrpedia.presentation.UserViewModel
@@ -53,4 +54,12 @@ fun TextInputLayout.setVisibility(userType: UserViewModel.UserType) {
     } else {
         View.VISIBLE
     }
+}
+
+@BindingAdapter("android:setText")
+fun AppCompatButton.setText(userType: UserViewModel.UserType) {
+    if(userType == UserViewModel.UserType.LOGIN)
+        this.text = this.context.getString(R.string.login_btn_text)
+    else
+        this.text = this.context.getString(R.string.register_btn_text)
 }
