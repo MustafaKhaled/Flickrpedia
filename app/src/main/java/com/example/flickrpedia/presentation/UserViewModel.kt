@@ -79,7 +79,7 @@ class UserViewModel @Inject constructor(private val application: Application, pr
 
     fun validateAge(age: String): Pair<Boolean, String> {
         return if (age.trim().isEmpty()) {
-            Pair(false, "Age is required")
+            Pair(false, application.applicationContext.getString(R.string.age_is_required))
         } else
             Pair(true, "")
     }

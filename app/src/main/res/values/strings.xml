@@ -24,8 +24,9 @@
     <string name="user_comments_label">Comments</string>
     <string name="user_favorites_label">Favorites</string>
     <string name="user_downloads_label">Downloads</string>
-
-
+    <string name="age_is_required">Age is required</string>
+    <string name="username_and_password_are_not_matching">username and password are not matching</string>
+    <string name="the_email_already_registered_please_login_error_msg">The Email already registered, please login</string>
 
 
 </resources>

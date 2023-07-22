@@ -35,6 +35,14 @@ fun AppCompatButton.setText(userType: UserViewModel.UserType) {
         this.text = this.context.getString(R.string.register_btn_text)
 }
 
+@BindingAdapter("android:setText")
+fun TextView.setText(userType: UserViewModel.UserType) {
+    if(userType == UserViewModel.UserType.LOGIN)
+        this.text = this.context.getString(R.string.login_btn_text)
+    else
+        this.text = this.context.getString(R.string.register_btn_text)
+}
+
 @BindingAdapter("android:imageUrl")
 fun ImageView.loadImage(url: String) {
     Glide.with(this.context).load(url).into(this)

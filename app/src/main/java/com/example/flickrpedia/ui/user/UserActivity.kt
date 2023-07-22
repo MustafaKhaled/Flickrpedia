@@ -3,6 +3,7 @@ package com.example.flickrpedia.ui.user
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Message
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -51,11 +52,11 @@ class UserActivity : AppCompatActivity(), View.OnFocusChangeListener {
                         View.VISIBLE
 
                     is UserViewModel.UserUiState.SuccessLogin -> {
-                        showToastMessage(it.email)
+                        showToastMessage(getString(R.string.success_login_msg), it.email)
                         startHomeScreen()
                     }
                     is UserViewModel.UserUiState.SuccessRegistration -> {
-                        showToastMessage(it.userModel.email)
+                        showToastMessage(getString(R.string.success_registration_msg),it.userModel.email)
                         startHomeScreen()
                     }
                     else -> {}
@@ -64,11 +65,14 @@ class UserActivity : AppCompatActivity(), View.OnFocusChangeListener {
         }
 
     }
+    override fun onFocusChange(view: View?, p1: Boolean) {
+        validateForm(view)
+    }
 
-    private fun showToastMessage(params: String) {
+    private fun showToastMessage( message: String, params: String) {
         Toast.makeText(
             applicationContext,
-            String.format(getString(R.string.success_registration_msg), params),
+            String.format(message, params),
             Toast.LENGTH_LONG
         ).show()
     }
@@ -154,10 +158,6 @@ class UserActivity : AppCompatActivity(), View.OnFocusChangeListener {
         textLayoutInput.error = ""
     }
 
-    override fun onFocusChange(view: View?, p1: Boolean) {
-        validateForm(view)
-    }
-
     private fun validateForm(view: View?): Boolean {
         when (view?.id) {
             R.id.emailTextInput -> {
@@ -198,8 +198,6 @@ class UserActivity : AppCompatActivity(), View.OnFocusChangeListener {
     private fun hideKeyboard() {
         val inputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-        // Check if the keyboard is visible, then hide it
         if (currentFocus != null) {
             inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
         }
