@@ -1,4 +1,4 @@
-package com.example.flickrpedia.ui
+package com.example.flickrpedia.ui.user
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,7 @@ import com.example.flickrpedia.databinding.UserActivityBinding
 import com.example.flickrpedia.presentation.UserViewModel
 import com.example.flickrpedia.misc.getAge
 import com.example.flickrpedia.misc.getCalenderConstraints
+import com.example.flickrpedia.ui.home.HomeActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint

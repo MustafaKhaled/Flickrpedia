@@ -16,6 +16,8 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+const val BASE_URL = "https://pixabay.com/"
+
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
@@ -27,7 +29,7 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
-        return Retrofit.Builder().baseUrl("").client(client)
+        return Retrofit.Builder().baseUrl(BASE_URL).client(client)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
     }

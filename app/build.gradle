@@ -63,6 +63,4 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.7.2'
     //Fragment Ktx
     implementation 'androidx.fragment:fragment-ktx:1.6.0'
-//    //navigation
-//    implementation 'androidx.navigation:navigation-*:2.6.0'
 }

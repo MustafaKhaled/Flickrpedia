@@ -6,10 +6,10 @@
 
     <fragment
         android:id="@+id/imagesListFragment"
-        android:name="com.example.flickrpedia.ui.ImagesListFragment"
+        android:name="com.example.flickrpedia.ui.home.ImagesListFragment"
         android:label="ImagesListFragment" />
     <fragment
         android:id="@+id/imageDetailsFragment"
-        android:name="com.example.flickrpedia.ui.ImageDetailsFragment"
+        android:name="com.example.flickrpedia.ui.home.ImageDetailsFragment"
         android:label="ImageDetailsFragment" />
 </navigation>
