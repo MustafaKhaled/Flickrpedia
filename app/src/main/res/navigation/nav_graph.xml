@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/imagesListFragment">
+
+    <fragment
+        android:id="@+id/imagesListFragment"
+        android:name="com.example.flickrpedia.ui.ImagesListFragment"
+        android:label="ImagesListFragment" />
+    <fragment
+        android:id="@+id/imageDetailsFragment"
+        android:name="com.example.flickrpedia.ui.ImageDetailsFragment"
+        android:label="ImageDetailsFragment" />
+</navigation>

@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import com.example.flickrpedia.R
 import com.example.flickrpedia.databinding.HomeActivityBinding
 import com.example.flickrpedia.presentation.HomeViewModel
-import com.example.flickrpedia.presentation.UserViewModel
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: HomeActivityBinding
