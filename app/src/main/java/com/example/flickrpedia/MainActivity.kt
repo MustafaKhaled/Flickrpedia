@@ -1,18 +1,25 @@
 package com.example.flickrpedia
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.coroutineScope
 import com.example.flickrpedia.databinding.ActivityMainBinding
 import com.example.flickrpedia.presentation.UserViewModel
+import com.example.flickrpedia.ui.State
 import com.example.flickrpedia.ui.getAge
 import com.example.flickrpedia.ui.getCalenderConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), View.OnFocusChangeListener {
 
     lateinit var binding: ActivityMainBinding
@@ -23,6 +30,31 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener {
         binding.userViewModel = userViewModel
         binding.lifecycleOwner = this
         setupListeners()
+        lifecycle.coroutineScope.launch {
+            userViewModel.uiState.collect {
+                when (it) {
+                    is UserViewModel.UserUiState.ErrorRegister -> Toast.makeText(
+                        applicationContext,
+                        it.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    is UserViewModel.UserUiState.ErrorLogin -> Toast.makeText(
+                        applicationContext,
+                        it.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    is UserViewModel.UserUiState.Loading -> binding.progressBar.visibility =
+                        View.VISIBLE
+
+                    is UserViewModel.UserUiState.SuccessLogin -> {}
+                    is UserViewModel.UserUiState.SuccessRegistration -> {}
+                    else -> {}
+                }
+            }
+        }
+
     }
 
     private fun setupListeners() {
@@ -43,14 +75,34 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener {
         }
         binding.userPrimaryBtn.setOnClickListener {
             requestFocus(it)
-            if (validateForm(binding.emailTextInput) &&
-                validateForm(binding.passwordTextInput) &&
-                validateForm(binding.ageTextInput)
-            ) {
-                Log.d("MainActivity", "setupListeners: Success")
-            } else {
-                Log.d("MainActivity", "setupListeners: Failure")
+            when (userViewModel.userType.value) {
+                UserViewModel.UserType.LOGIN -> {
+                    if (validateForm(binding.emailTextInput) &&
+                        validateForm(binding.passwordTextInput)
+                    ) {
+                        resetErrors()
+                        userViewModel.login(
+                            email = binding.emailTextInput.text.toString(),
+                            password = binding.passwordTextInput.text.toString()
+                        )
+                    }
+                }
+
+                UserViewModel.UserType.REGISTER -> {
+                    if (validateForm(binding.emailTextInput) &&
+                        validateForm(binding.passwordTextInput) &&
+                        validateForm(binding.ageTextInput)
+                    ) {
+                        resetErrors()
+                        userViewModel.register(
+                            email = binding.emailTextInput.text.toString(),
+                            password = binding.passwordTextInput.text.toString(),
+                            age = binding.ageTextInput.toString()
+                        )
+                    }
+                }
             }
+
         }
         binding.switchUserType.setOnClickListener {
             if (userViewModel.userType.value == UserViewModel.UserType.REGISTER)
@@ -58,10 +110,14 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener {
             else
                 userViewModel.changeUserType(UserViewModel.UserType.REGISTER)
 
-            resetError(binding.ageTextLayout)
-            resetError(binding.passwordTextLayout)
-            resetError(binding.emailTextLayout)
+            resetErrors()
         }
+    }
+
+    private fun resetErrors() {
+        resetError(binding.ageTextLayout)
+        resetError(binding.passwordTextLayout)
+        resetError(binding.emailTextLayout)
     }
 
     private fun showErrorTextLayout(
@@ -83,7 +139,7 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener {
         when (view?.id) {
             R.id.emailTextInput -> {
                 val (isValid, errorMessage) = userViewModel.validateEmail(binding.emailTextInput.text.toString())
-                return  validateTextInput(view, binding.emailTextLayout, isValid, errorMessage)
+                return validateTextInput(view, binding.emailTextLayout, isValid, errorMessage)
             }
 
             R.id.passwordTextInput -> {
@@ -111,7 +167,7 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener {
             }
             false
         } else {
-            resetError(binding.ageTextLayout)
+            resetError(textLayoutLayout)
             true
         }
     }

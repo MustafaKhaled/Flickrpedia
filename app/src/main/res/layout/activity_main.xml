@@ -4,17 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-            <variable
-                name="userViewModel"
-                type="com.example.flickrpedia.presentation.UserViewModel" />
+        <import type="android.view.View"/>
+        <import type="com.example.flickrpedia.presentation.UserViewModel.UserUiState"/>
+        <variable
+            name="userViewModel"
+            type="com.example.flickrpedia.presentation.UserViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parentConstraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:layout_gravity="center_vertical">
+        android:layout_gravity="center_vertical"
+        tools:context=".MainActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/innerConstraint"
@@ -96,8 +98,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:focusable="false"
                     android:cursorVisible="false"
+                    android:focusable="false"
                     android:inputType="none"
                     tools:text="mustafa@example.com" />
 
@@ -109,27 +111,37 @@
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_marginHorizontal="26dp"
-                android:textColor="@color/black"
-                android:text="@string/login_btn_text"
                 android:focusable="true"
                 android:setText="@{userViewModel.userType}"
-                app:layout_constraintTop_toBottomOf="@+id/ageTextLayout"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/login_btn_text"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ageTextLayout"
                 tools:text="Login" />
 
             <TextView
                 android:id="@+id/switchUserType"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/userPrimaryBtn"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginHorizontal="26dp"
                 android:layout_marginVertical="8dp"
-                android:textAlignment="center"
                 android:setBottomText="@{userViewModel.userType}"
-                android:text="@string/dont_have_an_account" />
+                android:text="@string/dont_have_an_account"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userPrimaryBtn" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:visibility="@{userViewModel.uiState instanceof UserUiState.Loading ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switchUserType" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
