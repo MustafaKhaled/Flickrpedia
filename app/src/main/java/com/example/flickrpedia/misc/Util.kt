@@ -1,4 +1,4 @@
-package com.example.flickrpedia.ui
+package com.example.flickrpedia.misc
 
 import android.view.View
 import android.widget.TextView

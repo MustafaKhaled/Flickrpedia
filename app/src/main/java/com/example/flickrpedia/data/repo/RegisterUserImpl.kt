@@ -2,7 +2,7 @@ package com.example.flickrpedia.data.repo
 
 import com.example.flickrpedia.data.model.UserModel
 import com.example.flickrpedia.domain.repo.RegisterUser
-import com.example.flickrpedia.ui.State
+import com.example.flickrpedia.misc.State
 import javax.inject.Inject
 
 class RegisterUserImpl @Inject constructor() : RegisterUser {

@@ -1,32 +1,31 @@
-package com.example.flickrpedia
+package com.example.flickrpedia.ui
 
-import android.opengl.Visibility
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.coroutineScope
-import com.example.flickrpedia.databinding.ActivityMainBinding
+import com.example.flickrpedia.R
+import com.example.flickrpedia.databinding.UserActivityBinding
 import com.example.flickrpedia.presentation.UserViewModel
-import com.example.flickrpedia.ui.State
-import com.example.flickrpedia.ui.getAge
-import com.example.flickrpedia.ui.getCalenderConstraints
+import com.example.flickrpedia.misc.getAge
+import com.example.flickrpedia.misc.getCalenderConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), View.OnFocusChangeListener {
+class UserActivity : AppCompatActivity(), View.OnFocusChangeListener {
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: UserActivityBinding
     private val userViewModel by viewModels<UserViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.user_activity)
         binding.userViewModel = userViewModel
         binding.lifecycleOwner = this
         setupListeners()
@@ -48,7 +47,14 @@ class MainActivity : AppCompatActivity(), View.OnFocusChangeListener {
                     is UserViewModel.UserUiState.Loading -> binding.progressBar.visibility =
                         View.VISIBLE
 
-                    is UserViewModel.UserUiState.SuccessLogin -> {}
+                    is UserViewModel.UserUiState.SuccessLogin -> {
+                        Toast.makeText(
+                            applicationContext,
+                            "Success login with ${it.email}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        startActivity(Intent(this@UserActivity, HomeActivity::class.java))
+                    }
                     is UserViewModel.UserUiState.SuccessRegistration -> {}
                     else -> {}
                 }

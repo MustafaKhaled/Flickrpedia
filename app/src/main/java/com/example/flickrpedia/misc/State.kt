@@ -1,4 +1,4 @@
-package com.example.flickrpedia.ui
+package com.example.flickrpedia.misc
 
 sealed class State<out T> {
     data class Success<out T>(val data: T) : State<T>()
