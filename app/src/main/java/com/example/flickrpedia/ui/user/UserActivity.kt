@@ -1,8 +1,10 @@
 package com.example.flickrpedia.ui.user
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -10,9 +12,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.coroutineScope
 import com.example.flickrpedia.R
 import com.example.flickrpedia.databinding.UserActivityBinding
-import com.example.flickrpedia.presentation.UserViewModel
 import com.example.flickrpedia.misc.getAge
 import com.example.flickrpedia.misc.getCalenderConstraints
+import com.example.flickrpedia.presentation.UserViewModel
 import com.example.flickrpedia.ui.home.HomeActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
@@ -49,19 +51,33 @@ class UserActivity : AppCompatActivity(), View.OnFocusChangeListener {
                         View.VISIBLE
 
                     is UserViewModel.UserUiState.SuccessLogin -> {
-                        Toast.makeText(
-                            applicationContext,
-                            "Success login with ${it.email}",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        startActivity(Intent(this@UserActivity, HomeActivity::class.java))
+                        showToastMessage(it.email)
+                        startHomeScreen()
                     }
-                    is UserViewModel.UserUiState.SuccessRegistration -> {}
+                    is UserViewModel.UserUiState.SuccessRegistration -> {
+                        showToastMessage(it.userModel.email)
+                        startHomeScreen()
+                    }
                     else -> {}
                 }
             }
         }
 
+    }
+
+    private fun showToastMessage(params: String) {
+        Toast.makeText(
+            applicationContext,
+            String.format(getString(R.string.success_registration_msg), params),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    private fun startHomeScreen() {
+        this.finish()
+        startActivity(Intent(this@UserActivity, HomeActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
     }
 
     private fun setupListeners() {
@@ -109,7 +125,7 @@ class UserActivity : AppCompatActivity(), View.OnFocusChangeListener {
                     }
                 }
             }
-
+            hideKeyboard()
         }
         binding.switchUserType.setOnClickListener {
             if (userViewModel.userType.value == UserViewModel.UserType.REGISTER)
@@ -176,6 +192,16 @@ class UserActivity : AppCompatActivity(), View.OnFocusChangeListener {
         } else {
             resetError(textLayoutLayout)
             true
+        }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        // Check if the keyboard is visible, then hide it
+        if (currentFocus != null) {
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
         }
     }
 

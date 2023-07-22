@@ -3,6 +3,8 @@
     <string name="login_title">Login</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="success_login_msg">Welcome back, Success login with %s</string>
+    <string name="success_registration_msg">Welcome, we\'ve created an account with %s</string>
     <string name="age_hint">Age</string>
     <string name="login_btn_text">Login</string>
     <string name="register_btn_text">Register</string>
