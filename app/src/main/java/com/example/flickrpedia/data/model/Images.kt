@@ -1,13 +1,15 @@
 package com.example.flickrpedia.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class Images(
     val total: Long,
     val totalHits: Long,
     val hits: List<Hit>,
 )
-
+@Parcelize
 data class Hit(
     val id: Long,
     @SerializedName("pageURL")
@@ -37,4 +39,4 @@ data class Hit(
     val user: String,
     @SerializedName("userImageURL")
     val userImageUrl: String,
-)
+): Parcelable

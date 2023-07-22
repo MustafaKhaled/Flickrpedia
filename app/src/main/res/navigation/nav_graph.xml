@@ -7,9 +7,22 @@
     <fragment
         android:id="@+id/imagesListFragment"
         android:name="com.example.flickrpedia.ui.home.ImagesListFragment"
-        android:label="ImagesListFragment" />
+        android:label="ImagesListFragment" >
+        <action
+            android:id="@+id/action_imagesListFragment_to_imageDetailsFragment"
+            app:destination="@id/imageDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/imagesListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/imageDetailsFragment"
         android:name="com.example.flickrpedia.ui.home.ImageDetailsFragment"
-        android:label="ImageDetailsFragment" />
+        android:label="ImageDetailsFragment" >
+        <argument
+            android:name="hit"
+            app:argType="com.example.flickrpedia.data.model.Hit" />
+    </fragment>
 </navigation>
