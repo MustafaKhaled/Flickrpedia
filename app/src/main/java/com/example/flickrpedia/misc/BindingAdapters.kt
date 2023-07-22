@@ -1,9 +1,11 @@
 package com.example.flickrpedia.misc
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import com.example.flickrpedia.R
 import com.example.flickrpedia.presentation.UserViewModel
 import com.google.android.material.textfield.TextInputLayout
@@ -31,4 +33,9 @@ fun AppCompatButton.setText(userType: UserViewModel.UserType) {
         this.text = this.context.getString(R.string.login_btn_text)
     else
         this.text = this.context.getString(R.string.register_btn_text)
+}
+
+@BindingAdapter("android:imageUrl")
+fun ImageView.loadImage(url: String) {
+    Glide.with(this.context).load(url).into(this)
 }

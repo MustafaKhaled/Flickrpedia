@@ -15,5 +15,15 @@
     <string name="image_details_section">Image Details</string>
     <string name="image_size_label">Image size</string>
     <string name="image_type_label">Image Type</string>
+    <string name="image_tags_label">Image Tags</string>
     <string name="user_details_section_title">User Details</string>
+    <string name="user_views_label">Views</string>
+    <string name="user_likes_label">Likes</string>
+    <string name="user_comments_label">Comments</string>
+    <string name="user_favorites_label">Favorites</string>
+    <string name="user_downloads_label">Downloads</string>
+
+
+
+
 </resources>

@@ -5,32 +5,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="label"
+            type="String" />
+
+        <variable
+            name="value"
+            type="String" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:paddingVertical="4dp"
-        >
+        android:paddingVertical="4dp">
 
         <TextView
             android:id="@+id/label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:text="@{label}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text= "image size: "
-            />
+            tools:text="image size: " />
 
         <TextView
             android:id="@+id/value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:text="@{value}"
             app:layout_constraintStart_toEndOf="@+id/label"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text= "200 dp "
-            />
+            tools:text="200 dp " />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
