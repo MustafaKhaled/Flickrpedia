@@ -12,4 +12,8 @@
     <string name="password_can_t_be_less_than_6_or_more_than_12_character">password can\'t be less than 6 or more than 12 character</string>
     <string name="email_is_required">Email is required</string>
     <string name="invalid_email_format">Invalid Email format</string>
+    <string name="image_details_section">Image Details</string>
+    <string name="image_size_label">Image size</string>
+    <string name="image_type_label">Image Type</string>
+    <string name="user_details_section_title">User Details</string>
 </resources>
